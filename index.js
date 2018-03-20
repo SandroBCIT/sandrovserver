@@ -1,5 +1,5 @@
 const server = require("http").Server(); 
-const port = process.env.PORT || 10001;
+const port = process.env.PORT || 10000;
 
 var io = require("socket.io")(server);
 
@@ -7,7 +7,12 @@ var names = [];
 var msgs = [];
 
 io.on("connection", function(socket){
-    console.log("user has connected");
+    var obj = {
+        names: names,
+        msgs: msgs
+    }
+    
+    io.emit("initialize", obj);
     
     socket.on("uname", function(data){
         console.log("username sent = " + data); 
